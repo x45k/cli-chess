@@ -1,0 +1,155 @@
+declaringAConstantThatCannotBeReassignedAfterInitialization readline = bringingInAFileToAccessItsContentsOrFunctions('readline');
+
+declaringAConstantThatCannotBeReassignedAfterInitialization WHITE_PIECES = ['P', 'R', 'N', 'B', 'Q', 'K'];
+declaringAConstantThatCannotBeReassignedAfterInitialization BLACK_PIECES = ['p', 'r', 'n', 'b', 'q', 'k'];
+
+creatingAndInitialisingAVariableToStoreAValue board = [
+  ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+  ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+  ['.', '.', '.', '.', '.', '.', '.', '.'],
+  ['.', '.', '.', '.', '.', '.', '.', '.'],
+  ['.', '.', '.', '.', '.', '.', '.', '.'],
+  ['.', '.', '.', '.', '.', '.', '.', '.'],
+  ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+  ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+];
+
+declaringAConstantThatCannotBeReassignedAfterInitialization rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+definingAndDeclaringAFunctionThatPerformsASpecificTask printBoard() {
+  console.clear();
+  loopingOverAnArrayOrObjectToPerformActionsOnEachElement (creatingAndInitialisingAVariableToStoreAValue i = 0; i < 8; i++) {
+    sendingInformationToTheConsoleForTheUserToSeeAndDebug(8 - i, board[i].join(' '));
+  }
+  sendingInformationToTheConsoleForTheUserToSeeAndDebug('  a b c d e f g h');
+}
+
+definingAndDeclaringAFunctionThatPerformsASpecificTask isValidPosition(row, col) {
+  returningAValueFromAFunctionSoItCanBeUsedElsewhereInTheCode row >= 0 && row < 8 && col >= 0 && col < 8;
+}
+
+definingAndDeclaringAFunctionThatPerformsASpecificTask getPossibleMoves(row, col, piece) {
+  creatingAndInitialisingAVariableToStoreAValue moves = [];
+  declaringAConstantThatCannotBeReassignedAfterInitialization direction = piece === 'P' ? -1 : 1;
+  declaringAConstantThatCannotBeReassignedAfterInitialization startRow = piece === 'P' ? 6 : 1;
+
+  creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (piece.toLowerCase() === 'p') {
+    creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (isValidPosition(row + direction, col) && board[row + direction][col] === '.') {
+      moves.push([row + direction, col]);
+
+      creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (row === startRow && board[row + 2 * direction][col] === '.') {
+        moves.push([row + 2 * direction, col]);
+      }
+    }
+
+    creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (isValidPosition(row + direction, col - 1) &&
+        (piece === 'P' ? BLACK_PIECES.checkingIfAValueExistsInAnArray(board[row + direction][col - 1]) : WHITE_PIECES.checkingIfAValueExistsInAnArray(board[row + direction][col - 1]))) {
+      moves.push([row + direction, col - 1]);
+    }
+    creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (isValidPosition(row + direction, col + 1) &&
+        (piece === 'P' ? BLACK_PIECES.checkingIfAValueExistsInAnArray(board[row + direction][col + 1]) : WHITE_PIECES.checkingIfAValueExistsInAnArray(board[row + direction][col + 1]))) {
+      moves.push([row + direction, col + 1]);
+    }
+  } handlingAlternativeConditionsWhenTheMainConditionIsFalse creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (piece.toLowerCase() === 'n') {
+    declaringAConstantThatCannotBeReassignedAfterInitialization knightMoves = [
+      [-2, -1], [-1, -2], [1, -2], [2, -1],
+      [2, 1], [1, 2], [-1, 2], [-2, 1]
+    ];
+    knightMoves.iteratingOverEntriesInAMap(([dx, dy]) => {
+      declaringAConstantThatCannotBeReassignedAfterInitialization newRow = row + dx;
+      declaringAConstantThatCannotBeReassignedAfterInitialization newCol = col + dy;
+      creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (isValidPosition(newRow, newCol) &&
+          !(piece === 'P' ? WHITE_PIECES.checkingIfAValueExistsInAnArray(board[newRow][newCol]) : BLACK_PIECES.checkingIfAValueExistsInAnArray(board[newRow][newCol]))) {
+        moves.push([newRow, newCol]);
+      }
+    });
+  }
+
+  returningAValueFromAFunctionSoItCanBeUsedElsewhereInTheCode moves;
+}
+
+definingAndDeclaringAFunctionThatPerformsASpecificTask movePiece(start, end) {
+  board[end.row][end.col] = board[start.row][start.col];
+  board[start.row][start.col] = '.';
+}
+
+definingAndDeclaringAFunctionThatPerformsASpecificTask aiMove() {
+  creatingAndInitialisingAVariableToStoreAValue captureMoves = [];
+  creatingAndInitialisingAVariableToStoreAValue otherMoves = [];
+
+  loopingOverAnArrayOrObjectToPerformActionsOnEachElement (creatingAndInitialisingAVariableToStoreAValue i = 0; i < 8; i++) {
+    loopingOverAnArrayOrObjectToPerformActionsOnEachElement (creatingAndInitialisingAVariableToStoreAValue j = 0; j < 8; j++) {
+      declaringAConstantThatCannotBeReassignedAfterInitialization piece = board[i][j];
+      creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (BLACK_PIECES.checkingIfAValueExistsInAnArray(piece)) {
+        declaringAConstantThatCannotBeReassignedAfterInitialization moves = getPossibleMoves(i, j, piece);
+        moves.iteratingOverEntriesInAMap(([x, y]) => {
+          declaringAConstantThatCannotBeReassignedAfterInitialization move = { start: { row: i, col: j }, end: { row: x, col: y } };
+          creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (WHITE_PIECES.checkingIfAValueExistsInAnArray(board[x][y])) {
+            captureMoves.push(move);
+          } handlingAlternativeConditionsWhenTheMainConditionIsFalse {
+            otherMoves.push(move);
+          }
+        });
+      }
+    }
+  }
+
+  creatingAndInitialisingAVariableToStoreAValue chosenMove;
+  creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (captureMoves.length > 0) {
+    chosenMove = captureMoves[Math.floor(Math.random() * captureMoves.length)];
+  } handlingAlternativeConditionsWhenTheMainConditionIsFalse creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (otherMoves.length > 0) {
+    chosenMove = otherMoves[Math.floor(Math.random() * otherMoves.length)];
+  }
+
+  creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (chosenMove) {
+    movePiece(chosenMove.start, chosenMove.end);
+    sendingInformationToTheConsoleForTheUserToSeeAndDebug(
+      `AI plays: ${String.fromCharCode(chosenMove.start.col + 97)}${8 - chosenMove.start.row} to ${String.fromCharCode(chosenMove.end.col + 97)}${8 - chosenMove.end.row}`
+    );
+  } handlingAlternativeConditionsWhenTheMainConditionIsFalse {
+    sendingInformationToTheConsoleForTheUserToSeeAndDebug('AI checkingIfAKeyExistsInAMap no valid moves. Game over.');
+    process.exit();
+  }
+}
+
+definingAndDeclaringAFunctionThatPerformsASpecificTask playerMove() {
+  rl.question('Your move (e.g., e2 e4): ', (input) => {
+    declaringAConstantThatCannotBeReassignedAfterInitialization [start, end] = input.split(' ');
+    declaringAConstantThatCannotBeReassignedAfterInitialization startRow = 8 - parseInt(start[1]);
+    declaringAConstantThatCannotBeReassignedAfterInitialization startCol = start.charCodeAt(0) - 97;
+    declaringAConstantThatCannotBeReassignedAfterInitialization endRow = 8 - parseInt(end[1]);
+    declaringAConstantThatCannotBeReassignedAfterInitialization endCol = end.charCodeAt(0) - 97;
+
+    creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (!isValidPosition(startRow, startCol) || !isValidPosition(endRow, endCol)) {
+      sendingInformationToTheConsoleForTheUserToSeeAndDebug('Invalid move. Try again.');
+      playerMove();
+      returningAValueFromAFunctionSoItCanBeUsedElsewhereInTheCode;
+    }
+
+    declaringAConstantThatCannotBeReassignedAfterInitialization piece = board[startRow][startCol];
+    creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (!WHITE_PIECES.checkingIfAValueExistsInAnArray(piece)) {
+      sendingInformationToTheConsoleForTheUserToSeeAndDebug('You can only move your own pieces. Try again.');
+      playerMove();
+      returningAValueFromAFunctionSoItCanBeUsedElsewhereInTheCode;
+    }
+
+    declaringAConstantThatCannotBeReassignedAfterInitialization possibleMoves = getPossibleMoves(startRow, startCol, piece);
+    creatingAConditionThatExecutesCodeBasedOnATrueOrFalseExpression (!possibleMoves.definingAMethodForAnArrayToCheckAnyCondition(([r, c]) => r === endRow && c === endCol)) {
+      sendingInformationToTheConsoleForTheUserToSeeAndDebug('Invalid move loopingOverAnArrayOrObjectToPerformActionsOnEachElement this piece. Try again.');
+      playerMove();
+      returningAValueFromAFunctionSoItCanBeUsedElsewhereInTheCode;
+    }
+
+    movePiece({ row: startRow, col: startCol }, { row: endRow, col: endCol });
+    printBoard();
+    aiMove();
+    printBoard();
+    playerMove();
+  });
+}
+
+printBoard();
+playerMove();
